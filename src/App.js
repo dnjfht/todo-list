@@ -11,7 +11,9 @@ function App() {
   const [todo, setTodo] = useState(initialState);
   const [title, setTitle] = useState("");
   const [darkmode, setDarkmode] = useState(false);
-  const [isActive, setIsActive] = useState(true);
+
+  const filters = ["all", "active", "completed"];
+  const [filter, setFilter] = useState(filters[0]);
 
   const handleTitleInputChange = (e) => {
     setTitle(e.target.value);
@@ -59,10 +61,6 @@ function App() {
 
   console.log(todo);
 
-  const filters = ["all", "active", "completed"];
-
-  const [filter, setFilter] = useState(filters[0]);
-
   const handleFilterChange = (filter) => {
     setFilter(filter);
   };
@@ -81,13 +79,22 @@ function App() {
     }
   }
 
+  const handleDarkModeSwitch = () => {
+    setDarkmode(!darkmode);
+  };
+
+  console.log(darkmode);
+
   return (
     <div className={styles.Wrap}>
       {/* todo container */}
       <div className={styles.TodoBox}>
         {/* navbar */}
         <nav className={styles.NavBar}>
-          <CiLight className={styles.LightIcon} />
+          <CiLight
+            onClick={handleDarkModeSwitch}
+            className={styles.LightIcon}
+          />
 
           <ul className={styles.Menu}>
             {filters.map((value, index) => (
