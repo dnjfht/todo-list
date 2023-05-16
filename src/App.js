@@ -2,9 +2,30 @@ import { useState } from "react";
 import styles from "./App.module.css";
 import { v4 as uuidv4 } from "uuid";
 import { CiLight } from "react-icons/ci";
+import Todo from "./components/Todo";
 
 function App() {
   const [todo, setTodo] = useState(initialState);
+  const [title, setTitle] = useState("");
+  const [darkmode, setDarkmode] = useState(false);
+
+  const handleTitleInputChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleAddTodo = (e) => {
+    e.preventDefault();
+
+    const newTodo = { id: uuidv4(), title: title, isActive: false };
+
+    setTodo((prev) => [...prev, newTodo]);
+
+    setTitle("");
+  };
+
+  const handleDeleteTodo = (deleted) => {
+    setTodo(todo.filter((t) => t.id !== deleted.id));
+  };
 
   return (
     <div className={styles.Wrap}>
@@ -22,16 +43,32 @@ function App() {
         </nav>
 
         {/* contents */}
-        <div className={styles.Contents}></div>
+        <div className={styles.Contents}>
+          {todo.map((list) => {
+            return (
+              <Todo
+                handleDeleteTodo={handleDeleteTodo}
+                key={list.id}
+                list={list}
+              />
+            );
+          })}
+        </div>
 
         {/* write_input */}
         <div className={styles.TodoInputWrap}>
           <input
+            onChange={handleTitleInputChange}
+            value={title}
             className={styles.InputText}
             type="text"
             placeholder="Add Todo..."
           />
-          <button className={styles.SubmitButton} type="button">
+          <button
+            onClick={handleAddTodo}
+            className={styles.SubmitButton}
+            type="button"
+          >
             Add
           </button>
         </div>
