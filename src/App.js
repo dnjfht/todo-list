@@ -2,13 +2,16 @@ import { useState } from "react";
 import styles from "./App.module.css";
 import { v4 as uuidv4 } from "uuid";
 import { CiLight } from "react-icons/ci";
-import Todo from "./components/Todo";
+// import Todo from "./components/Todo";
+import { ImCheckboxUnchecked } from "react-icons/im";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { MdCheckBox } from "react-icons/md";
 
 function App() {
   const [todo, setTodo] = useState(initialState);
   const [title, setTitle] = useState("");
   const [darkmode, setDarkmode] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
 
   const handleTitleInputChange = (e) => {
     setTitle(e.target.value);
@@ -17,21 +20,25 @@ function App() {
   const handleAddTodo = (e) => {
     e.preventDefault();
 
-    const newTodo = { id: uuidv4(), title: title, isActive: false };
+    const newTodo = { id: uuidv4(), title: title, isActive: true };
 
     setTodo((prev) => [...prev, newTodo]);
 
     setTitle("");
   };
 
-  const handleDeleteTodo = (deleted) => {
-    setTodo(todo.filter((t) => t.id !== deleted.id));
+  const handleDeleteTodo = (id) => {
+    setTodo(todo.filter((t) => t.id !== id));
   };
 
-  const handleUpdateTodo = (updated) => {
+  // const handleDeleteTodo = (deleted) => {
+  //   setTodo(todo.filter((t) => t.id !== deleted.id));
+  // };
+
+  const handleUpdateTodo = (id) => {
     setTodo(
       todo.map((t) => {
-        if (t.id === updated.id) {
+        if (t.id === id) {
           return { ...t, isActive: !t.isActive };
         }
         return t;
@@ -39,7 +46,24 @@ function App() {
     );
   };
 
+  // const handleUpdateTodo = (updated) => {
+  //   setTodo(
+  //     todo.map((t) => {
+  //       if (t.id === updated.id) {
+  //         return { ...t, isActive: !t.isActive };
+  //       }
+  //       return t;
+  //     })
+  //   );
+  // };
+
   console.log(todo);
+
+  const filters = ["all", "active", "completed"];
+
+  const [filter, setFilter] = useState(filters[0]);
+
+  const handleFilterChange = () => {};
 
   return (
     <div className={styles.Wrap}>
@@ -50,9 +74,16 @@ function App() {
           <CiLight className={styles.LightIcon} />
 
           <ul className={styles.Menu}>
-            <li className={styles.List}>All</li>
-            <li className={styles.List}>Active</li>
-            <li className={styles.List}>Completed</li>
+            {filters.map((value, index) => (
+              <li key={index} className={styles.List}>
+                <button
+                  onClick={() => handleFilterChange(value)}
+                  className={styles.ListButton}
+                >
+                  {value}
+                </button>
+              </li>
+            ))}
           </ul>
         </nav>
 
@@ -60,12 +91,29 @@ function App() {
         <div className={styles.Contents}>
           {todo.map((list) => {
             return (
-              <Todo
-                handleDeleteTodo={handleDeleteTodo}
-                handleUpdateTodo={handleUpdateTodo}
-                key={list.id}
-                list={list}
-              />
+              <div key={list.id} className={styles.ContentWrap}>
+                <div className={styles.CheckArea}>
+                  {list.isActive ? (
+                    <ImCheckboxUnchecked
+                      onClick={() => handleUpdateTodo(list.id)}
+                      className={styles.CheckIcon}
+                    />
+                  ) : (
+                    <MdCheckBox
+                      onClick={() => handleUpdateTodo(list.id)}
+                      className={styles.CheckIcon}
+                    />
+                  )}
+
+                  <p className={styles.ConetentTitle}>{list.title}</p>
+                </div>
+                <button
+                  onClick={() => handleDeleteTodo(list.id)}
+                  className={styles.DeleteButton}
+                >
+                  <RiDeleteBin6Fill className={styles.DeleteIcon} />
+                </button>
+              </div>
             );
           })}
         </div>
