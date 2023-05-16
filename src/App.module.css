@@ -1,7 +1,7 @@
 .Wrap {
   width: 100%;
   height: 100vh;
-  background-color: darkseagreen;
+  background-color: var(--color-bg-light);
 
   display: flex;
   flex-direction: column;
@@ -12,10 +12,10 @@
 .TodoBox {
   width: 400px;
   height: 440px;
-  background-color: rgb(81, 135, 81);
+  background-color: var(--color-bg);
   border-radius: 20px;
 
-  box-shadow: 10px 14px 10px rgba(81, 135, 81, 0.4);
+  box-shadow: 10px 14px 10px var(--color-shadow);
 
   overflow: hidden;
 
@@ -29,8 +29,8 @@
   height: 60px;
   padding: 20px;
   box-sizing: border-box;
-  background-color: rgb(43, 87, 43);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: var(--color-bg-dark);
+  border-bottom: 1px solid var(--color-bg-light);
 
   display: flex;
   flex-direction: row;
@@ -57,14 +57,14 @@
 
 .List {
   margin-left: 10px;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-accent);
 }
 
 .ListButton {
   background-color: transparent;
   border: none;
 
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-bg-light);
   font-size: 14px;
 }
 
@@ -76,7 +76,7 @@
 
   overflow: scroll;
 
-  color: white;
+  color: var(--color-white);
 }
 
 .Contents::-webkit-scrollbar {
@@ -86,12 +86,12 @@
 
 .Contents::-webkit-scrollbar-thumb {
   width: 6px;
-  background-color: rgb(43, 87, 43);
+  background-color: var(--color-scrollbar);
 }
 
 .Contents::-webkit-scrollbar-track {
   width: 6px;
-  background-color: rgba(43, 87, 43, 0.2);
+  background-color: var(--color-scrollbar-track);
 }
 
 .ContentWrap {
@@ -113,12 +113,14 @@
 .ConetentTitle {
   margin: 0;
   margin-left: 10px;
+
+  color: var(--color-text);
 }
 
 .DeleteButton {
   width: 24px;
   height: 24px;
-  background-color: rgb(43, 87, 43);
+  background-color: var(--color-bg-dark);
   border-radius: 20px;
   border: none;
 
@@ -132,12 +134,12 @@
 
 .CheckIcon {
   font-size: 20px;
-  color: white;
+  color: var(--color-white);
 }
 
 .DeleteIcon {
   font-size: 24px;
-  color: white;
+  color: var(--color-white);
 }
 
 .TodoInputWrap {
@@ -145,8 +147,8 @@
   height: 60px;
   padding: 10px;
   box-sizing: border-box;
-  background-color: rgb(43, 87, 43);
-  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: var(--color-bg-dark);
+  border-top: 1px solid var(--color-bg-light);
 
   display: flex;
   flex-direction: row;
@@ -160,16 +162,16 @@
   padding: 10px;
   box-sizing: border-box;
   background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--color-bg-light);
   border-radius: 10px;
 
   outline: none;
 
-  color: white;
+  color: var(--color-text);
 }
 
 .InputText::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-bg-light);
 }
 
 .SubmitButton {
@@ -177,7 +179,7 @@
   height: 100%;
   border-radius: 10px;
   border: none;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: var(--color-gray);
 
   outline: none;
 
@@ -185,7 +187,7 @@
 }
 
 .SubmitButton:hover {
-  background-color: white;
+  background-color: var(--color-white);
 
   cursor: pointer;
 }
