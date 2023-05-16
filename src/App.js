@@ -63,7 +63,23 @@ function App() {
 
   const [filter, setFilter] = useState(filters[0]);
 
-  const handleFilterChange = () => {};
+  const handleFilterChange = (filter) => {
+    setFilter(filter);
+  };
+
+  console.log(filter);
+
+  const filtered = getFilteredItems(todo, filter);
+
+  function getFilteredItems(todo, filter) {
+    if (filter === "all") {
+      return todo;
+    } else if (filter === "active") {
+      return todo.filter((t) => t.isActive === true);
+    } else if (filter === "completed") {
+      return todo.filter((t) => t.isActive === false);
+    }
+  }
 
   return (
     <div className={styles.Wrap}>
@@ -89,7 +105,7 @@ function App() {
 
         {/* contents */}
         <div className={styles.Contents}>
-          {todo.map((list) => {
+          {filtered.map((list) => {
             return (
               <div key={list.id} className={styles.ContentWrap}>
                 <div className={styles.CheckArea}>
