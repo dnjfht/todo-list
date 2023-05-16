@@ -12,6 +12,10 @@
 }
 
 html.dark {
+  --color-bg-light: #578057;
+  --color-bg-dark: #040c04;
+  --color-bg: #2a3f2a;
+  --color-shadow: #81a581;
 }
 
 body {
