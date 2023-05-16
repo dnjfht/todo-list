@@ -8,6 +8,7 @@ function App() {
   const [todo, setTodo] = useState(initialState);
   const [title, setTitle] = useState("");
   const [darkmode, setDarkmode] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   const handleTitleInputChange = (e) => {
     setTitle(e.target.value);
@@ -26,6 +27,19 @@ function App() {
   const handleDeleteTodo = (deleted) => {
     setTodo(todo.filter((t) => t.id !== deleted.id));
   };
+
+  const handleUpdateTodo = (updated) => {
+    setTodo(
+      todo.map((t) => {
+        if (t.id === updated.id) {
+          return { ...t, isActive: !t.isActive };
+        }
+        return t;
+      })
+    );
+  };
+
+  console.log(todo);
 
   return (
     <div className={styles.Wrap}>
@@ -48,6 +62,7 @@ function App() {
             return (
               <Todo
                 handleDeleteTodo={handleDeleteTodo}
+                handleUpdateTodo={handleUpdateTodo}
                 key={list.id}
                 list={list}
               />
