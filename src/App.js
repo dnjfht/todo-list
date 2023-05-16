@@ -1,16 +1,18 @@
 import { useState } from "react";
 import styles from "./App.module.css";
 import { v4 as uuidv4 } from "uuid";
-import { CiLight } from "react-icons/ci";
+import { HiMoon, HiSun } from "react-icons/hi";
 // import Todo from "./components/Todo";
 import { ImCheckboxUnchecked } from "react-icons/im";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { MdCheckBox } from "react-icons/md";
 
+import { useDarkMode } from "./DarkModeContext";
+
 function App() {
   const [todo, setTodo] = useState(initialState);
   const [title, setTitle] = useState("");
-  const [darkmode, setDarkmode] = useState(false);
+  // const [darkmode, setDarkmode] = useState(false);
 
   const filters = ["all", "active", "completed"];
   const [filter, setFilter] = useState(filters[0]);
@@ -79,11 +81,11 @@ function App() {
     }
   }
 
-  const handleDarkModeSwitch = () => {
-    setDarkmode(!darkmode);
-  };
+  // const handleDarkModeSwitch = () => {
+  //   setDarkmode(!darkmode);
+  // };
 
-  console.log(darkmode);
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   return (
     <div className={styles.Wrap}>
@@ -91,10 +93,10 @@ function App() {
       <div className={styles.TodoBox}>
         {/* navbar */}
         <nav className={styles.NavBar}>
-          <CiLight
-            onClick={handleDarkModeSwitch}
-            className={styles.LightIcon}
-          />
+          <button onClick={toggleDarkMode} className={styles.DarkModeBtn}>
+            {!darkMode && <HiMoon className={styles.DarkModeIcon} />}
+            {darkMode && <HiSun className={styles.DarkModeIcon} />}
+          </button>
 
           <ul className={styles.Menu}>
             {filters.map((value, index) => (
@@ -128,7 +130,14 @@ function App() {
                     />
                   )}
 
-                  <p className={styles.ConetentTitle}>{list.title}</p>
+                  <p
+                    style={{
+                      textDecoration: list.isActive ? "none" : "line-through",
+                    }}
+                    className={styles.ConetentTitle}
+                  >
+                    {list.title}
+                  </p>
                 </div>
                 <button
                   onClick={() => handleDeleteTodo(list.id)}

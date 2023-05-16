@@ -37,9 +37,13 @@
   justify-content: space-between;
   align-items: center;
 }
+.DarkModeBtn {
+  background-color: transparent;
+  border: none;
+}
 
-.LightIcon {
-  font-size: 24px;
+.DarkModeIcon {
+  font-size: 20px;
   color: white;
 }
 
