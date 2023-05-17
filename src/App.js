@@ -10,7 +10,7 @@ import { MdCheckBox } from "react-icons/md";
 import { useDarkMode } from "./DarkModeContext";
 
 function App() {
-  const [todo, setTodo] = useState(readTodoFromLocalStorage());
+  const [todo, setTodo] = useState(() => readTodoFromLocalStorage());
   const [title, setTitle] = useState("");
   // const [darkmode, setDarkmode] = useState(false);
 
@@ -190,6 +190,17 @@ function readTodoFromLocalStorage() {
   // 새로운 아이디가 추가되거나 업데이트가 일어날 때마다
   // 함수가 다시 호출되면서 로컬 스토리지에 있는 데이터를 다시 읽어와서 파싱한다.
   // useState는 React에서 제공하는 hook이고, 인자로는 초기값을 전달할 수 있다.
+  // 컴포넌트 상태가 변경이 되거나 prop이 변경이 되면 모든 함수가 재호출되게 된다.
+  // useState는 내부적으로 컴포넌트에 필요한 데이터들을 기억하고 있다.
+  // useState 내부적으로 저장된 데이터가 있다면 초기값을 무시하고 내부적으로 사용하고 있는 값을 사용하게 된다.
+
+  // 함수를 호출해서 데이터를 읽어오거나 로컬 스토리지를 읽어오거나 파일을 읽어 오거나 이런 일들을 한다면
+  // 함수(컴포넌트)가 호출이 될 때마다 다시 행동을 읽어온다.
+  // 그리고 내부적으로 읽어온 값을 사용하지 않고 내부적으로 가지고 있는 값을 쓸 것이다.
+  // 그럼 UI상으로 업데이트 되지는 않겠지만, 여전히 네트워크에서 불필요하게 데이터를 읽게 될 것이다.
+  // 이걸 방지해주기 위해서 함수를 호출하는 경우라면, 특히 무거운 일을 하는 경우라면
+  // 호출한 값 자체를 전달하는 것이 아니라 콜백함수로 감싸줘야 한다.
+  // 그렇게 하면 아무리 상태를 바꾸거나 업데이트가 되어도 다시 함수가 호출되지 않는다.
   const todo = localStorage.getItem("todo");
   return todo ? JSON.parse(todo) : [];
 }
