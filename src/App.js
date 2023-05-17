@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./App.module.css";
 import { v4 as uuidv4 } from "uuid";
 import { HiMoon, HiSun } from "react-icons/hi";
@@ -10,7 +10,7 @@ import { MdCheckBox } from "react-icons/md";
 import { useDarkMode } from "./DarkModeContext";
 
 function App() {
-  const [todo, setTodo] = useState(initialState);
+  const [todo, setTodo] = useState(readTodoFromLocalStorage());
   const [title, setTitle] = useState("");
   // const [darkmode, setDarkmode] = useState(false);
 
@@ -86,6 +86,10 @@ function App() {
   // };
 
   const { darkMode, toggleDarkMode } = useDarkMode();
+
+  useEffect(() => {
+    localStorage.setItem("todo", JSON.stringify(todo));
+  }, [todo]);
 
   return (
     <div className={styles.Wrap}>
@@ -181,3 +185,11 @@ const initialState = [
   { id: uuidv4(), title: "카페가기", isActive: false },
   { id: uuidv4(), title: "청소하기", isActive: false },
 ];
+
+function readTodoFromLocalStorage() {
+  // 새로운 아이디가 추가되거나 업데이트가 일어날 때마다
+  // 함수가 다시 호출되면서 로컬 스토리지에 있는 데이터를 다시 읽어와서 파싱한다.
+  // useState는 React에서 제공하는 hook이고, 인자로는 초기값을 전달할 수 있다.
+  const todo = localStorage.getItem("todo");
+  return todo ? JSON.parse(todo) : [];
+}
